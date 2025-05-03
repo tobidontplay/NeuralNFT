@@ -4,14 +4,14 @@ const path = require('path');
 
 // Load contract data
 const contractAddressFile = path.join(__dirname, '../contractData/contract-address.json');
-const contractArtifactFile = path.join(__dirname, '../contractData/ArtifyNFT.json');
+const contractArtifactFile = path.join(__dirname, '../contractData/NeuralNFT.json');
 
 let contractAddress;
 let contractABI;
 
 try {
   const addressData = JSON.parse(fs.readFileSync(contractAddressFile));
-  contractAddress = addressData.ArtifyNFT;
+  contractAddress = addressData.NeuralNFT;
   
   const artifactData = JSON.parse(fs.readFileSync(contractArtifactFile));
   contractABI = artifactData.abi;

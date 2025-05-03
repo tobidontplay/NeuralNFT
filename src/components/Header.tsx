@@ -29,7 +29,7 @@ const Header: React.FC = () => {
           >
             <PaintBrush size={24} className="text-purple-500" />
             <span className="text-xl font-bold bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text text-transparent">
-              ArtifyNFT
+              NeuralNFT
             </span>
           </div>
 

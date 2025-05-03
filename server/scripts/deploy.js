@@ -11,17 +11,17 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contract factory to deploy
-  const ArtifyNFT = await hre.ethers.getContractFactory("ArtifyNFT");
+  const NeuralNFT = await hre.ethers.getContractFactory("NeuralNFT");
   
-  console.log("Deploying ArtifyNFT...");
+  console.log("Deploying NeuralNFT...");
   
   // Deploy the contract
-  const artifyNFT = await ArtifyNFT.deploy();
+  const neuralNFT = await NeuralNFT.deploy();
 
   // Wait for deployment to finish
-  await artifyNFT.deployed();
+  await neuralNFT.deployed();
 
-  console.log("ArtifyNFT deployed to:", artifyNFT.address);
+  console.log("NeuralNFT deployed to:", neuralNFT.address);
   
   // Store the contract address for later use
   const fs = require("fs");
@@ -33,15 +33,15 @@ async function main() {
   
   fs.writeFileSync(
     contractsDir + "/contract-address.json",
-    JSON.stringify({ ArtifyNFT: artifyNFT.address }, undefined, 2)
+    JSON.stringify({ NeuralNFT: neuralNFT.address }, undefined, 2)
   );
   
   // Copy the contract artifacts to make them easily accessible
   const artifactDir = __dirname + "/../artifacts/contracts";
   
   fs.copyFileSync(
-    artifactDir + "/ArtifyNFT.sol/ArtifyNFT.json",
-    contractsDir + "/ArtifyNFT.json"
+    artifactDir + "/NeuralNFT.sol/NeuralNFT.json",
+    contractsDir + "/NeuralNFT.json"
   );
   
   console.log("Contract artifacts saved to:", contractsDir);

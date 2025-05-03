@@ -7,10 +7,10 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 /**
- * @title ArtifyNFT
+ * @title NeuralNFT
  * @dev ERC721 token for AI-generated artwork with marketplace functionality
  */
-contract ArtifyNFT is ERC721URIStorage, Ownable, ReentrancyGuard {
+contract NeuralNFT is ERC721URIStorage, Ownable, ReentrancyGuard {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
     
@@ -35,7 +35,7 @@ contract ArtifyNFT is ERC721URIStorage, Ownable, ReentrancyGuard {
     event NFTSold(uint256 tokenId, address from, address to, uint256 price);
     event RoyaltyPaid(uint256 tokenId, address creator, uint256 amount);
     
-    constructor() ERC721("ArtifyNFT", "ANFT") {}
+    constructor() ERC721("NeuralNFT", "NNFT") {}
     
     /**
      * @dev Mints a new NFT token

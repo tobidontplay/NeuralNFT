@@ -11,7 +11,7 @@ const Footer: React.FC = () => {
             <div className="flex items-center space-x-2 mb-4">
               <PaintBrush size={20} className="text-purple-500" />
               <span className="text-xl font-bold bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text text-transparent">
-                ArtifyNFT
+                NeuralNFT
               </span>
             </div>
             <p className="text-sm text-gray-400 mb-4">
@@ -114,7 +114,7 @@ const Footer: React.FC = () => {
         </div>
         
         <div className="border-t border-gray-800 mt-8 pt-6 text-center text-sm text-gray-500">
-          <p>© 2025 ArtifyNFT. All rights reserved. Created for portfolio purposes.</p>
+          <p>© 2025 NeuralNFT. All rights reserved. Created for portfolio purposes.</p>
         </div>
       </div>
     </footer>

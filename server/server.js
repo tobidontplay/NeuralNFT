@@ -268,7 +268,7 @@ app.post('/api/nft/mint', async (req, res) => {
     // Create metadata for the NFT
     const metadata = {
       name: artwork.title,
-      description: `AI-generated artwork created with ArtifyNFT`,
+      description: `AI-generated artwork created with NeuralNFT`,
       image: artwork.imageUrl,
       attributes: [
         {
