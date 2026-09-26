@@ -1,0 +1,21 @@
+name: neuralnft
+path: /agent/repos/neuralnft  # [INFERRED — confirm] path in this cloud workspace, not a laptop checkout
+repo: tobidontplay/NeuralNFT
+language: TypeScript
+run: npm run dev  # [INFERRED — confirm] this starts the Vite client only. The API is a different process.
+test: "TODO: confirm — no tests detected"  # no test script and no test files were found in the root package.
+build: npm run build  # Vite build of the client.
+port: null  # Vite port is unset. server/server.js falls back to process.env.PORT or 5000. CORS in that file names http://localhost:5173.
+env: .env.local
+watch:
+  - src
+  - server
+  - package.json
+auto_start: false
+auto_test: on-change
+features_dir: specs/features
+todo: TODO.md
+verification: docs/verification.md
+github:
+  enabled: true
+  ci: null
