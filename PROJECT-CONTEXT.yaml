@@ -1,0 +1,465 @@
+# Machine-readable twin of PROJECT-STATE.md, PROJECT-GOALS.md, PROJECT-GAP.md, and PROJECT-TEACH.md.
+# Quiz and agent readers: null means unknown or not applicable. Do not infer a missing key.
+# analysis_version 1. Audit date 2026-10-01. Application code was not modified. Servers were not started.
+
+project:
+  name: NeuralNFT
+  package_name: ai-nft-platform
+  repo: tobidontplay/NeuralNFT
+  owner: tobidontplay
+  visibility: public
+  html_title: AI-Generated NFT Art Platform
+  head_commit: b9c7ea2c132259ef99f9b8a002ad91678f5fac90
+  head_date: "2026-09-26"
+  product_code_last_commit: b118aef0cb38e6cee4ae39c8d307f39e13a8e1f5
+  product_code_last_date: "2025-05-03"
+  commit_count: 4
+  agents_md_commit_count_claim: 2
+  agents_md_claim_stale: true
+
+purpose: >
+  Portfolio shell for an AI art gallery and NFT mint.
+  A Vite client, two Express servers, and a Solidity ERC-721 are in the tree.
+  The client does not call either server. The mint shown in the browser
+  does not write the collection the next page reads.
+
+stage: prototype
+maturity: portfolio-shell
+last_analysis: "2026-10-01"
+confidence: medium
+analysis_version: 1
+
+goals:
+  - id: g-visitor-loop
+    kind: stated
+    statement: A visitor generates art, browses a gallery, and mints.
+    success_criteria: Client pages for home, create, gallery, and my NFTs render.
+    source: specs/project-brief.md
+    met: partial
+  - id: g-one-server
+    kind: stated
+    statement: One Express entry is chosen and the other is marked unused.
+    success_criteria: The unused server is marked unused.
+    source: specs/project-brief.md
+    met: false
+  - id: g-real-address
+    kind: stated
+    statement: A deployed contract address is written down from a real deploy output.
+    success_criteria: Address comes from a deploy log, not only from a JSON file.
+    source: specs/project-brief.md
+    met: false
+  - id: g-contract-file
+    kind: stated
+    statement: The contract of record is server/contracts/NeuralNFT.sol.
+    success_criteria: That file is the contract.
+    source: specs/project-brief.md
+    met: true
+  - id: g-monitor
+    kind: stated
+    statement: Ariadne runs the root dev script and does not invent a test command.
+    success_criteria: project.yaml run is npm run dev, test is a TODO, port is null.
+    source: project.yaml
+    met: true
+  - id: g-portfolio-demo
+    kind: inferred
+    statement: The repo is a portfolio demo of AI, chain, and a UI.
+    success_criteria: null
+    source: src/components/Footer.tsx
+    met: null
+  - id: g-local-hardhat
+    kind: inferred
+    statement: Minting is meant for a local Hardhat node, not a public network.
+    success_criteria: null
+    source: server/blockchain/contractInteraction.js
+    met: null
+  - id: g-svg-demo
+    kind: inferred
+    statement: The in-browser SVG generator is the demo that must work with the API stopped.
+    success_criteria: null
+    source: src/utils/artGenerator.ts
+    met: null
+
+capabilities:
+  - id: cap-client-routes
+    name: Four client pages
+    status: done
+    summary: Routes /, /create, /gallery, and /my-nfts exist. No catch-all route.
+    evidence: src/App.tsx
+    confidence: high
+  - id: cap-client-home
+    name: Home marketing page
+    status: done
+    summary: Static page. Copy claims a trained model, Ethereum, and cloud GPUs.
+    evidence: src/pages/HomePage.tsx
+    confidence: high
+  - id: cap-client-wallet
+    name: Wallet connect
+    status: partial
+    summary: 1.5s timer, random 15-character address, random balance. No browser wallet.
+    evidence: src/context/WalletContext.tsx
+    confidence: high
+  - id: cap-client-generate
+    name: Browser art generation
+    status: partial
+    summary: SVG data URL from style, color, and complexity. Theme changes the title only.
+    evidence: src/utils/artGenerator.ts
+    confidence: high
+  - id: cap-client-gallery
+    name: Searchable gallery
+    status: partial
+    summary: Filters five Pexels fixtures. Does not call an API.
+    evidence: src/components/Gallery/Gallery.tsx
+    confidence: high
+  - id: cap-client-mint
+    name: Client mint
+    status: broken
+    summary: Three-second timeout, random token id, hardcoded owner, result not stored.
+    evidence: src/utils/mockData.ts
+    confidence: high
+  - id: cap-client-collection
+    name: My NFTs
+    status: broken
+    summary: Always shows mockNFTs. List, cancel, and transfer have no handlers.
+    evidence: src/components/NFT/NFTCollection.tsx
+    confidence: high
+  - id: cap-api-js
+    name: Monolith Express API
+    status: partial
+    summary: Routes exist. Process exits unless Hardhat and the model init succeed. Client does not call it.
+    evidence: server/server.js
+    confidence: high
+  - id: cap-api-ts
+    name: Modular Express API
+    status: broken
+    summary: Larger route list of in-memory fakes. isAddress import does not match ethers 5.7.2 types.
+    evidence: server/src/controllers/wallet.controller.ts
+    confidence: high
+  - id: cap-contract
+    name: ERC-721 contract
+    status: partial
+    summary: Source and artifact exist. Public mint records msg.sender as creator. Liveness not checked.
+    evidence: server/contracts/NeuralNFT.sol
+    confidence: high
+  - id: cap-marketplace
+    name: List and buy
+    status: partial
+    summary: Contract functions exist. UI buttons do nothing. server.js does not expose list or buy.
+    evidence: server/contracts/NeuralNFT.sol
+    confidence: high
+  - id: cap-ai-model
+    name: Generative model
+    status: broken
+    summary: Four dense layers named StyleGAN. No fit call and no dataset in the repo.
+    evidence: server/ai/model.js
+    confidence: high
+  - id: cap-metadata
+    name: Public token metadata
+    status: absent
+    summary: tokenURI is a relative /uploads path. ipfs-http-client is unused.
+    evidence: server/server.js
+    confidence: high
+  - id: cap-persistence
+    name: Durable records
+    status: absent
+    summary: Arrays in the Node process and in React state.
+    evidence: server/server.js
+    confidence: high
+  - id: cap-auth
+    name: Wallet signatures
+    status: broken
+    summary: signature is accepted and ignored. verifySignature returns true.
+    evidence: server/src/services/wallet.service.ts
+    confidence: high
+  - id: cap-tests
+    name: Automated tests
+    status: absent
+    summary: No test files. Server test script exits 1. Verification log has no data row.
+    evidence: docs/verification.md
+    confidence: high
+  - id: cap-deploy
+    name: Hosted app and live contract
+    status: absent
+    summary: No CI workflow. Vercel URL appears in deployment.md and not in README.md. URL not requested.
+    evidence: docs/architecture/deployment.md
+    confidence: medium
+
+stack:
+  languages:
+    - TypeScript
+    - JavaScript
+    - Solidity
+  client:
+    - React 18
+    - Vite 5
+    - react-router-dom 6
+    - Tailwind CSS 3
+    - lucide-react
+  server:
+    - Express 5
+    - ethers 5.7.2
+    - Helmet
+    - CORS
+    - Morgan
+    - Multer
+  chain:
+    - Solidity 0.8.4
+    - Hardhat 2
+    - OpenZeppelin Contracts 4.9
+  model:
+    - TensorFlow.js Node 4
+    - canvas
+  data:
+    - in-memory arrays
+    - browser React state
+  unused_dependencies:
+    - ipfs-http-client
+    - jimp
+    - sharp
+  database: null
+  ci: null
+  test_runner: null
+
+architecture:
+  summary: >
+    Three programs share names and types and do not share a running loop.
+    The Vite client is the only process the root dev script starts.
+  style: monorepo with two unused backends
+  entry_points:
+    - id: client
+      command: npm run dev
+      file: src/main.tsx
+      port: null
+    - id: server-js
+      command: npm run server
+      cwd: server
+      file: server/server.js
+      port: 5000
+    - id: server-ts
+      command: npm run dev
+      cwd: server
+      file: server/src/index.ts
+      port: 5000
+  components:
+    - id: pages
+      path: src/pages
+      role: Home, create, gallery, my NFTs
+    - id: wallet-context
+      path: src/context/WalletContext.tsx
+      role: Mock wallet state
+    - id: svg-generator
+      path: src/utils/artGenerator.ts
+      role: Browser SVG
+    - id: monolith
+      path: server/server.js
+      role: RAM API plus chain mint
+    - id: modules
+      path: server/src
+      role: RAM API with marketplace-shaped routes
+    - id: contract
+      path: server/contracts/NeuralNFT.sol
+      role: ERC-721 plus fees
+  data_flow: >
+    Create calls generateArt in the browser and mintNFT in the same module.
+    My NFTs reads mockNFTs. No fetch crosses to Express.
+    server.js would mint through contractInteraction.js only after Hardhat and the model initialize.
+  client_calls_api: false
+  canonical_server: null
+
+risks:
+  - id: r-unwired-loop
+    severity: high
+    statement: Mint success does not update My NFTs, and the client calls no API.
+    evidence: src/utils/mockData.ts
+    confidence: high
+  - id: r-two-servers
+    severity: high
+    statement: Two servers default to port 5000 and implement different mints. Neither is chosen.
+    evidence: server/server.js
+    confidence: high
+  - id: r-ethers-import
+    severity: high
+    statement: Modular routes import isAddress from ethers 5.7.2, whose published types do not export that name.
+    evidence: server/src/controllers/nft.controller.ts
+    confidence: high
+  - id: r-stylegan-name
+    severity: high
+    statement: The model is a dense stack with no fit call, presented by class name as StyleGAN.
+    evidence: server/ai/model.js
+    confidence: high
+  - id: r-token-uri
+    severity: high
+    statement: Mint metadata URI is a relative uploads path, not a public or IPFS URI.
+    evidence: server/server.js
+    confidence: high
+  - id: r-server-signer-creator
+    severity: high
+    statement: Contract creator is msg.sender. The monolith signs with the first Hardhat account.
+    evidence: server/contracts/NeuralNFT.sol
+    confidence: high
+  - id: r-auth-stub
+    severity: high
+    statement: Signature verification returns true and mint does not check the signature.
+    evidence: server/src/services/wallet.service.ts
+    confidence: high
+  - id: r-no-tests
+    severity: high
+    statement: No tests and an empty verification log.
+    evidence: docs/verification.md
+    confidence: high
+  - id: r-private-counter
+    severity: medium
+    statement: getNFTsByOwner calls _tokenIds, which is private and absent from the ABI. No route calls it.
+    evidence: server/blockchain/contractInteraction.js
+    confidence: high
+  - id: r-zero-key-default
+    severity: medium
+    statement: env.ts defaults PRIVATE_KEY to 64 zero hex digits. Current services do not pass it to a signer.
+    evidence: server/src/config/env.ts
+    confidence: high
+  - id: r-weights-provenance
+    severity: medium
+    statement: weights.bin may or may not be initializer output. No training script is in the repo.
+    evidence: server/ai/model.js
+    confidence: medium
+  - id: r-address-liveness
+    severity: low
+    statement: contract-address.json holds the usual first Hardhat address. No node was queried.
+    evidence: server/contractData/contract-address.json
+    confidence: low
+
+decisions:
+  - id: d-adr-001
+    statement: project.yaml run is npm run dev at the repo root. The server is not the monitor command. Port is null.
+    source: docs/architecture/decisions/001-client-dev-script.md
+    status: accepted
+  - id: d-keep-both-servers
+    statement: Both Express trees stay until the owner picks one.
+    source: CASE-STUDY.md
+    status: accepted
+  - id: d-fees-in-token
+    statement: Royalty and platform fee live on NeuralNFT, default 250 basis points, cap 1000.
+    source: server/contracts/NeuralNFT.sol
+    status: accepted
+  - id: d-client-svg
+    statement: The create page imports the local SVG generator, not an API client.
+    source: src/components/ArtGenerator/ArtGenerator.tsx
+    status: accepted
+  - id: d-canonical-server
+    statement: null
+    source: TODO.md
+    status: null
+
+open_questions:
+  - id: q-which-server
+    question: Which process should the browser call, server/server.js, server/src/index.ts, or neither?
+    why_it_matters: Wiring the client to a guessed server freezes the wrong mint.
+    blocks: cap-client-mint
+  - id: q-network
+    question: Is the chain Hardhat on localhost:8545, or a public network?
+    why_it_matters: The committed address is only meaningful on a Hardhat node that deployed first from account zero.
+    blocks: cap-contract
+  - id: q-svg-is-product
+    question: Should Create keep drawing SVG offline, with the TensorFlow file treated as an experiment?
+    why_it_matters: The homepage claims a trained model the client does not use.
+    blocks: cap-ai-model
+  - id: q-vercel
+    question: Is neural-nft.vercel.app a deploy that should be documented?
+    why_it_matters: deployment.md names it and README.md does not. This audit did not request the URL.
+    blocks: cap-deploy
+  - id: q-audience
+    question: Who must believe the demo, a class, a hiring manager, or a user who pays gas?
+    why_it_matters: Those audiences forgive different mocks.
+    blocks: null
+  - id: q-feat-002
+    question: Should feat-002 stay in_progress until a server is chosen?
+    why_it_matters: The spec says the boot path is unconfirmed.
+    blocks: null
+  - id: q-delete-server
+    question: After a server is chosen, may the other server be deleted?
+    why_it_matters: CASE-STUDY wishes it had been deleted. This audit must not delete it.
+    blocks: null
+  - id: q-mock-wallet
+    question: Is the mock wallet the finished wallet for this portfolio?
+    why_it_matters: No window.ethereum exists, and no spec says to add it.
+    blocks: cap-client-wallet
+
+roadmap:
+  - id: road-1
+    item: Owner answers which server is canonical, or confirms the client mock is the product.
+    blocked_by: q-which-server
+  - id: road-2
+    item: Point the client at that choice so mint and My NFTs share one store.
+    blocked_by: road-1
+  - id: road-3
+    item: If the monolith is chosen, fix the contractAddress log export and replace the relative token URI.
+    blocked_by: road-1
+  - id: road-4
+    item: If the modular server is chosen, import ethers.utils.isAddress and replace the stubs that should be real.
+    blocked_by: road-1
+  - id: road-5
+    item: Record a contract address from a deploy log on a named network.
+    blocked_by: q-network
+  - id: road-6
+    item: Add one test, then set project.yaml test to that command and add a verification row.
+    blocked_by: null
+  - id: road-7
+    item: Marketplace buttons call a handler only after the loop shares a store.
+    blocked_by: road-2
+
+links:
+  repo: https://github.com/tobidontplay/NeuralNFT
+  readme: README.md
+  agents: AGENTS.md
+  brief: specs/project-brief.md
+  case_study: CASE-STUDY.md
+  todo: TODO.md
+  changelog: CHANGELOG.md
+  project_yaml: project.yaml
+  adr_001: docs/architecture/decisions/001-client-dev-script.md
+  overview: docs/architecture/overview.md
+  api_doc: docs/architecture/api.md
+  feat_001: specs/features/001-art-gallery-ui.md
+  feat_002: specs/features/002-mint-api-and-contract.md
+  verification: docs/verification.md
+  state: PROJECT-STATE.md
+  goals: PROJECT-GOALS.md
+  gap: PROJECT-GAP.md
+  teach: PROJECT-TEACH.md
+  contract: server/contracts/NeuralNFT.sol
+  contract_address_file: server/contractData/contract-address.json
+  client_entry: src/main.tsx
+  server_js: server/server.js
+  server_ts: server/src/index.ts
+  model: server/ai/model.js
+  live_site: null
+  ci: null
+
+teaching_hooks:
+  - id: h-three-programs
+    audience: owner
+    concept: A repository can contain three programs that share a name and do not share a call.
+    hook: The mint button says success, and the next page has never heard of that token.
+  - id: h-read-the-function
+    audience: owner
+    concept: Marketing copy is not an architecture diagram.
+    hook: The home page says the model was trained on millions of images. The function draws fifty random circles.
+  - id: h-ethers-major
+    audience: tutor
+    concept: A named import can fail when the lockfile is a different major version.
+    hook: isAddress is real in ethers. The lockfile is ethers 5.7.2, and that package's type entry does not export the name.
+  - id: h-creator-is-sender
+    audience: tutor
+    concept: msg.sender is the account that sent the transaction, not the recipient argument.
+    hook: The server mints to your address and the contract records the server as the artist.
+  - id: h-basis-points
+    audience: owner
+    concept: 250 basis points is 2.5 percent because the denominator is 10000.
+    hook: The fee looks like 250 until you divide by 10000.
+  - id: h-frontmatter
+    audience: agent
+    concept: status Done in prose is weaker than verified_by null in frontmatter.
+    hook: feat-001 says Done and also says nobody verified it.
+  - id: h-blocking-gap
+    audience: tutor
+    concept: The blocking gap is the broken shared store, not the missing test suite.
+    hook: Tests would not make View in My Collection show a token the array never received.

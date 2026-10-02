@@ -65,3 +65,20 @@ If this file conflicts with a direct user request, ASK before proceeding.
 - Concept mastery lives in docs/learning/concepts.md frontmatter.
 - When you complete a feature, update its frontmatter: stage, validation
   fields, verified_by. Do not mark "accepted" without user validation.
+
+## 11. Project Analysis Artifacts
+Deep analysis and teaching kit, written 2026-10-01. Additive docs.
+Application code was not modified. Servers were not started.
+Section 1 still says two commits and a last commit of 2025-05-03.
+That sentence describes the product history. HEAD is the 2026-09-26
+docs merge, and `git rev-list --count HEAD` is 4.
+
+| File | Reader | What it answers |
+|---|---|---|
+| [PROJECT-STATE.md](./PROJECT-STATE.md) | Owner, agent, tutor | Tables of identity, stack, components, capabilities, endpoints, data, tests, dead code, closed paths, and broken paths. Tags are `[HIGH]`, `[MED]`, `[LOW]`. |
+| [PROJECT-GOALS.md](./PROJECT-GOALS.md) | Owner | Stated and inferred goals, success criteria, non-goals, target user, stage, questions that block a mint spec. |
+| [PROJECT-GAP.md](./PROJECT-GAP.md) | Owner, agent | One gap row per capability, the three largest gaps, and the blocking gap. |
+| [PROJECT-TEACH.md](./PROJECT-TEACH.md) | Owner, tutor | Mental model, architecture, decisions, technology definitions, failure modes, conventions. Claims name a file. |
+| [PROJECT-CONTEXT.yaml](./PROJECT-CONTEXT.yaml) | Tutor, agent | Machine-readable twin. `analysis_version: 1`. Unknowns are `null`, not omitted keys. |
+
+Blocking gap, short form: the generate, mint, and my-collection pages do not share a store, and the client calls neither API. Read PROJECT-GAP.md before proposing a wiring change. Do not pick the canonical server in a docs pass. Do not delete either server until the owner answers the questions in PROJECT-GOALS.md.
